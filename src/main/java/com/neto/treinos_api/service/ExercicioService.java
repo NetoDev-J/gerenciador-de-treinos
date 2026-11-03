@@ -6,6 +6,7 @@ import com.neto.treinos_api.exception.ConflitoException;
 import com.neto.treinos_api.exception.RecursoNaoEncontradoException;
 import com.neto.treinos_api.model.Exercicio;
 import com.neto.treinos_api.repository.ExercicioRepository;
+import com.neto.treinos_api.repository.ItemDiaTreinoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import java.util.List;
 public class ExercicioService {
 
     private final ExercicioRepository repository;
+    private final ItemDiaTreinoRepository itemRepository;
 
     @Transactional
     public ExercicioResponse criar(ExercicioRequest request) {
@@ -59,8 +61,11 @@ public class ExercicioService {
     @Transactional
     public void excluir(Long id) {
         Exercicio exercicio = buscarEntidade(id);
-        // A regra "não excluir exercício em uso" entra nos passos 3 e 4,
-        // quando existirem as tabelas que referenciam o exercício.
+        if (itemRepository.existsByExercicioId(id)) {
+            throw new ConflitoException("O exercício '" + exercicio.getNome()
+                    + "' faz parte de dias de treino e não pode ser excluído");
+        }
+        // Quando existir a SerieRealizada (passo 4), a mesma checagem entra aqui.
         repository.delete(exercicio);
     }
 
