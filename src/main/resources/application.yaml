@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: treinos-api
+
+
+  config:
+    import: optional:file:.env[.properties]
+
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT:5432}/postgres
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+
+  # JPA: o Hibernate só valida, quem cria as tabelas é o Flyway
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
