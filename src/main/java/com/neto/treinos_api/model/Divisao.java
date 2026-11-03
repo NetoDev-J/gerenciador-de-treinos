@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "divisao")
@@ -21,4 +23,7 @@ public class Divisao {
 
     @Column(nullable = false)
     private boolean ativa;
+
+    @OneToMany(mappedBy = "divisao", cascade = CascadeType.REMOVE)
+    private List<DiaTreino> dias = new ArrayList<>();
 }
