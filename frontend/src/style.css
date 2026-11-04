@@ -1,0 +1,27 @@
+:root { font-family: system-ui, sans-serif; color: #1f2933; background: #f4f6f8; }
+body { margin: 0; }
+header { background: #1f2933; color: #fff; display: flex; align-items: center; gap: 2rem; padding: .75rem 1.5rem; }
+header h1 { font-size: 1.1rem; margin: 0; }
+nav a { color: #cbd2d9; margin-right: 1rem; text-decoration: none; }
+nav a.router-link-active { color: #fff; font-weight: 600; }
+main { max-width: 1100px; margin: 1.5rem auto; padding: 0 1rem; }
+section, .card { background: #fff; border-radius: 8px; padding: 1rem; box-shadow: 0 1px 3px #0002; margin-bottom: 1rem; }
+h2 { margin-top: 0; font-size: 1.1rem; }
+.colunas { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; align-items: start; }
+form { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+input, select, button { padding: .45rem .6rem; font: inherit; border: 1px solid #cbd2d9; border-radius: 6px; }
+input[type=number] { width: 5rem; }
+button { background: #2563eb; color: #fff; border-color: #2563eb; cursor: pointer; }
+button.perigo { background: #fff; color: #c0392b; border-color: #c0392b; }
+ul { list-style: none; padding: 0; margin: 0; }
+li { display: flex; align-items: center; gap: .5rem; padding: .4rem 0; border-bottom: 1px solid #eef0f2; }
+li.sel { font-weight: 600; }
+.dir { margin-left: auto; }
+.erro { background: #fdecea; color: #b42318; padding: .6rem .8rem; border-radius: 6px; }
+.tag { background: #d1fae5; color: #065f46; padding: .1rem .5rem; border-radius: 999px; font-size: .8rem; }
+.plano { color: #52606d; font-size: .9rem; margin: 0 0 .5rem; }
+.cronometro { position: sticky; bottom: 1rem; background: #1f2933; color: #fff; border-radius: 8px;
+  padding: .8rem 1rem; display: flex; align-items: center; gap: 1rem; }
+.cronometro .tempo { font-size: 1.8rem; font-variant-numeric: tabular-nums; }
+.cronometro.fim { background: #c0392b; animation: piscar .6s infinite alternate; }
+@keyframes piscar { to { opacity: .6; } }
