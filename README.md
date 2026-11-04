@@ -95,15 +95,3 @@ npm run dev
 ```
 
 Acesse `http://localhost:5173`. A URL da API pode ser alterada pela variável `VITE_API_URL` (padrão `http://localhost:8080`). O CORS do back-end está liberado para `http://localhost:5173`.
-
-## Roteiro de demonstração
-
-1. **Exercícios:** cadastre alguns exercícios.
-2. **Divisões:** crie uma divisão, adicione um dia com o dia da semana de hoje, inclua os exercícios (séries, repetições e descanso) e clique em **Ativar**.
-3. **Treinar:** inicie o treino de hoje, registre séries com a carga usada e acompanhe o cronômetro de descanso.
-
-## Próximos passos
-
-- Registro de peso e medidas corporais
-- Gráfico de evolução de carga por exercício
-- Autenticação e vínculo dos dados a cada usuário
