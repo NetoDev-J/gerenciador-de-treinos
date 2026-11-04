@@ -7,6 +7,7 @@ import com.neto.treinos_api.exception.RecursoNaoEncontradoException;
 import com.neto.treinos_api.model.Exercicio;
 import com.neto.treinos_api.repository.ExercicioRepository;
 import com.neto.treinos_api.repository.ItemDiaTreinoRepository;
+import com.neto.treinos_api.repository.SerieRealizadaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ public class ExercicioService {
 
     private final ExercicioRepository repository;
     private final ItemDiaTreinoRepository itemRepository;
+    private final SerieRealizadaRepository serieRepository;
 
     @Transactional
     public ExercicioResponse criar(ExercicioRequest request) {
@@ -65,7 +67,10 @@ public class ExercicioService {
             throw new ConflitoException("O exercício '" + exercicio.getNome()
                     + "' faz parte de dias de treino e não pode ser excluído");
         }
-        // Quando existir a SerieRealizada (passo 4), a mesma checagem entra aqui.
+        if (serieRepository.existsByExercicioId(id)) {
+            throw new ConflitoException("O exercício '" + exercicio.getNome()
+                    + "' possui séries registradas e não pode ser excluído");
+        }
         repository.delete(exercicio);
     }
 

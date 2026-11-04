@@ -9,6 +9,7 @@ import com.neto.treinos_api.model.DiaTreino;
 import com.neto.treinos_api.model.Divisao;
 import com.neto.treinos_api.repository.DiaTreinoRepository;
 import com.neto.treinos_api.repository.DivisaoRepository;
+import com.neto.treinos_api.repository.SessaoTreinoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ public class DiaTreinoService {
 
     private final DiaTreinoRepository repository;
     private final DivisaoRepository divisaoRepository;
+    private final SessaoTreinoRepository sessaoRepository;
 
     /** Regra de negócio: no máximo um treino por dia da semana em cada divisão. */
     @Transactional
@@ -80,8 +82,13 @@ public class DiaTreinoService {
 
     @Transactional
     public void excluir(Long id) {
-        // Os itens do dia (exercícios) entram no 3C, com exclusão em cascata.
-        repository.delete(buscarEntidade(id));
+        DiaTreino dia = buscarEntidade(id);
+        if (sessaoRepository.existsByDiaTreinoId(id)) {
+            throw new ConflitoException("O dia '" + dia.getNome()
+                    + "' possui sessões registradas e não pode ser excluído");
+        }
+        // Os itens do dia são removidos em cascata.
+        repository.delete(dia);
     }
 
     private DiaTreino buscarEntidade(Long id) {

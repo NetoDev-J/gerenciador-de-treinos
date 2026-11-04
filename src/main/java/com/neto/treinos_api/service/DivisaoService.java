@@ -6,6 +6,7 @@ import com.neto.treinos_api.exception.ConflitoException;
 import com.neto.treinos_api.exception.RecursoNaoEncontradoException;
 import com.neto.treinos_api.model.Divisao;
 import com.neto.treinos_api.repository.DivisaoRepository;
+import com.neto.treinos_api.repository.SessaoTreinoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import java.util.List;
 public class DivisaoService {
 
     private final DivisaoRepository repository;
+    private final SessaoTreinoRepository sessaoRepository;
 
     @Transactional
     public DivisaoResponse criar(DivisaoRequest request) {
@@ -70,8 +72,11 @@ public class DivisaoService {
     @Transactional
     public void excluir(Long id) {
         Divisao divisao = buscarEntidade(id);
-        // A exclusão em cascata dos dias entra no 3B; a regra
-        // "não excluir divisão com sessões registradas" entra no passo 4.
+        if (sessaoRepository.existsByDiaTreinoDivisaoId(id)) {
+            throw new ConflitoException("A divisão '" + divisao.getNome()
+                    + "' possui sessões registradas e não pode ser excluída");
+        }
+        // Os dias e seus itens são removidos em cascata.
         repository.delete(divisao);
     }
 

@@ -50,6 +50,11 @@ public class GlobalExceptionHandler {
         return montar(HttpStatus.BAD_REQUEST, "Valor inválido para o parâmetro '" + ex.getName() + "'", req, null);
     }
 
+    @ExceptionHandler(RequisicaoInvalidaException.class)
+    public ResponseEntity<ApiError> requisicaoInvalida(RequisicaoInvalidaException ex, HttpServletRequest req) {
+        return montar(HttpStatus.BAD_REQUEST, ex.getMessage(), req, null);
+    }
+
     private ResponseEntity<ApiError> montar(HttpStatus status, String mensagem,
                                             HttpServletRequest req, Map<String, String> campos) {
         ApiError erro = new ApiError(LocalDateTime.now(), status.value(),
