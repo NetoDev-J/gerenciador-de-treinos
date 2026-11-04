@@ -95,3 +95,9 @@ npm run dev
 ```
 
 Acesse `http://localhost:5173`. A URL da API pode ser alterada pela variável `VITE_API_URL` (padrão `http://localhost:8080`). O CORS do back-end está liberado para `http://localhost:5173`.
+
+## Testes
+
+Testes unitários das regras de negócio dos services (JUnit 5 + Mockito, sem acesso ao banco):
+
+    ./mvnw test -Dtest="*ServiceTest"
