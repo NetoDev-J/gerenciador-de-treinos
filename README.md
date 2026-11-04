@@ -7,6 +7,8 @@ Aplicação para acompanhamento de treinos de musculação: o usuário monta div
 - **Banco de dados:** PostgreSQL no Supabase, com migrations Flyway
 - **Documentação:** Swagger UI (springdoc)
 
+## Video explicativo: https://youtu.be/i0CIVKmfM6s
+
 ## Funcionalidades
 
 - CRUD de exercícios, com filtro por nome e grupo muscular
